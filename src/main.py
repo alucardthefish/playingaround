@@ -47,5 +47,16 @@ def delete_job_by_id(id: int, db: Session = Depends(get_db)):
 		db.delete(job)
 		db.commit()
 	return {"success": success}
+
+@app.put("/job/{id}")
+def update_job(id: int, details: CreateJobRequest, db: Session = Depends(get_db)):
+	job = db.query(Job).filter(Job.id == id).first()
+	is_found = bool(job)
+	if is_found:
+		job.title = details.title
+		job.description = details.description
+		db.add(job)
+		db.commit()
+	return {"success": is_found}
 	
 
