@@ -41,7 +41,7 @@ def get_job_by_id(id: int, db: Session = Depends(get_db)):
 
 @app.delete("/job/{id}")
 def delete_job_by_id(id: int, db: Session = Depends(get_db)):
-	job = db.query(Job).filter(Job.id == id).first()
+	job = found_job_by_id(id, db)
 	success = bool(job)
 	if success:
 		db.delete(job)
@@ -50,7 +50,7 @@ def delete_job_by_id(id: int, db: Session = Depends(get_db)):
 
 @app.put("/job/{id}")
 def update_job(id: int, details: CreateJobRequest, db: Session = Depends(get_db)):
-	job = db.query(Job).filter(Job.id == id).first()
+	job = found_job_by_id(id, db)
 	is_found = bool(job)
 	if is_found:
 		job.title = details.title
@@ -58,5 +58,10 @@ def update_job(id: int, details: CreateJobRequest, db: Session = Depends(get_db)
 		db.add(job)
 		db.commit()
 	return {"success": is_found}
+
+
+def found_job_by_id(id: int, db: Session = Depends(get_db)):
+	return db.query(Job).filter(Job.id == id).first()
+
 	
 
