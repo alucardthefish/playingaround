@@ -1,8 +1,10 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Body
+from fastapi.responses import JSONResponse
 from .schemas import CreateJobRequest
 from sqlalchemy.orm import Session
 from .database import get_db
 from .models import Job
+from celery_worker import create_task
 
 
 app = FastAPI()
@@ -62,6 +64,12 @@ def update_job(id: int, details: CreateJobRequest, db: Session = Depends(get_db)
 
 def found_job_by_id(id: int, db: Session = Depends(get_db)):
 	return db.query(Job).filter(Job.id == id).first()
-
 	
+@app.post("/ex1")
+def run_task(data=Body(...)):
+	amount = int(data["amount"])
+	x = data["x"]
+	y = data["y"]
+	task = create_task.delay(amount, x, y)
+	return JSONResponse({"Task:": task.get()})
 
