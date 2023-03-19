@@ -11,6 +11,7 @@ services:
       - .:/code
     links:
       - db
+  
   db:
     image: postgres:14-alpine
     ports:
@@ -20,6 +21,39 @@ services:
       - POSTGRES_PASSWORD=pguser
     volumes:
       - pg-data:/var/lib/postgresql/data
+  
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+  
+  celery_worker:
+    container_name: celery_worker
+    build: .
+    command: celery -A celery_worker.celery worker --loglevel=info
+    volumes:
+      - .:/code
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - app
+      - redis
+  
+  flower:
+    container_name: flower
+    build: .
+    command: celery -A celery_worker.celery flower --port=5555
+    volumes:
+      - .:/code
+    ports:
+      - 5556:5555
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - app
+      - redis
+      - celery_worker
 
 volumes:
   pg-data:
