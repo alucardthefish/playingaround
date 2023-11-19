@@ -1,0 +1,6 @@
+<h3>{{componentName}}</h3>
+<b>All data below:</b>
+<br>
+<div *ngFor="let job of jobs | keyvalue">
+	Key: <b>{{job.key}}</b> and Value: <b>{{job.value}}</b>
+</div>
