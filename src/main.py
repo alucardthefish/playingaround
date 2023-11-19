@@ -4,7 +4,7 @@ from .schemas import CreateJobRequest
 from sqlalchemy.orm import Session
 from .database import get_db
 from .models import Job
-from celery_worker import create_task
+from celery_worker import create_task, subprocess
 
 
 app = FastAPI()
@@ -72,4 +72,11 @@ def run_task(data=Body(...)):
 	y = data["y"]
 	task = create_task.delay(amount, x, y)
 	return JSONResponse({"Task:": task.get()})
+
+
+@app.post("/processor")
+def run_processor(time: int):
+	task = subprocess.delay(time)
+	return JSONResponse({"Processor result:": True})
+	# return JSONResponse({"Processor result:": task.get()})
 
