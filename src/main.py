@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, Body
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from .schemas import CreateJobRequest
 from sqlalchemy.orm import Session
 from .database import get_db
@@ -8,6 +9,16 @@ from celery_worker import create_task, subprocess
 
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
