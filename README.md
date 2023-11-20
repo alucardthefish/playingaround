@@ -1,15 +1,25 @@
-# Playing around python
+# Playing around with Python
 
-Trying out with Python + Celery + FastAPI + SQLAchemy
+Trying out with Python + Celery + FastAPI + SQLAchemy + Angular
 
-Adding this in branch-first (1, 2, 3, 4, 5)
+## Python and requirements
 
-Add AAAAAAAAAAAAAAA
+Install everything through Dockerfile and docker-compose.
 
-Some changes were requested to be done here
+## Angular
 
-This is the space for next B:
+For an old 32 bits laptop the following versions run on Linux Mint Tricia:
 
-Add BBBBBBBBBBBBBBB
+node version: v8.9.0
+npm version: 5.5.1
+angular-cli version: 6.2.4
 
-Add CCCCCCCCCCCCCCCCCCCCC
+### Install
+npm i @angular/cli@6.2.4
+
+Execute ng for creating project by
+
+node_modules/.bin/ng new 'project-name'
+
+cd project-name/
+npx ng generate component 'component-name' (creates component)
