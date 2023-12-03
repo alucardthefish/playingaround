@@ -1,8 +1,12 @@
 <h3>{{componentName}}</h3>
-<b>All data below:</b>
+
+
 <br>
-<div *ngFor="let job of jobs">
-	Id: <b>{{job.id}}</b><br>
-	Title: <b>{{job.title}}</b><br>
-	Description: <b>{{job.description}}</b><br>
+
+<div class="jobs_container">
+	<div class="job_class" *ngFor="let job of jobs">
+		<b>Id:</b> {{job.id}}<br>
+		<b>Title:</b> {{job.title}}<br>
+		<b>Description:</b> {{job.description}}<br>
+	</div>
 </div>

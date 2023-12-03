@@ -1,0 +1,13 @@
+.jobs_container {
+	display: flex;
+}
+
+.job_class {
+	border-radius: 25%;
+	border: thin;
+	width: 250px;
+	border-color: black;
+	border-style: solid;
+	margin: 15px;
+	padding: 20px;
+}
