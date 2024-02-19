@@ -23,3 +23,7 @@ node_modules/.bin/ng new 'project-name'
 
 cd project-name/
 npx ng generate component 'component-name' (creates component)
+
+## Run
+
+npm run start
